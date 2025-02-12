@@ -275,15 +275,21 @@ class KohlerData(DataUpdateCoordinator):
 
         if valve1_port_count > 0:
             for port_num in range(1, valve1_port_count + 1):
-                _valve1_outlet_mappings[port_num - 1] = self.getValue(
+                value = self.getValue(
                     f"valve1_outlet{port_num}_func"
-                )["id"]
+                )
+                if value is None:
+                    return
+                _valve1_outlet_mappings[port_num - 1] = value["id"]
 
         if valve2_port_count > 0:
             for port_num in range(1, valve2_port_count + 1):
-                _valve2_outlet_mappings[port_num - 1] = self.getValue(
+                value = self.getValue(
                     f"valve2_outlet{port_num}_func"
-                )["id"]
+                )
+                if value is None:
+                    return
+                _valve2_outlet_mappings[port_num - 1] = value["id"]
 
         self._valve1_outlet_mappings = _valve1_outlet_mappings
         self._valve2_outlet_mappings = _valve2_outlet_mappings
